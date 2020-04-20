@@ -1,18 +1,23 @@
 import React from 'react';
-import { NextPage } from 'next';
 
-interface InitialProps {
-  greeting: string;
+interface Task {title: string;}
+
+type TaskListProps = {
+  tasks: Task[];
 }
 
-interface Props extends InitialProps {}
+const TaskList: React.FunctionComponent<TaskListProps> = ({tasks}: TaskListProps) => {
+  return (
+    <ul>
+      {tasks.map((task, i) => {
+        return <li key={i}>{task.title}</li>
+      })}
+    </ul>
+  )};
 
-const IndexPage: NextPage<Props, InitialProps> = props => {
-  return <div>{props.greeting}</div>;
-};
+const tasks = [
+  {title: 'Task One'},
+  {title: 'Task Two'}
+];
 
-IndexPage.getInitialProps = async () => ({
-  greeting: 'Hello World!'
-});
-
-export default IndexPage;
+export default () => <div><TaskList tasks={tasks} /></div>;
